@@ -16,8 +16,7 @@ def cat_matrices2D(mat1, mat2, axis=0):
     """ concatenates two matrices """
     cat = []
     if axis == 0:
-        m = cat_arrays(mat1, mat2)
-        cat.append(m)
+        cat = cat_arrays(mat1, mat2)
         return cat
     else:
         for e in range(len(mat1)):
