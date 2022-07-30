@@ -14,12 +14,14 @@ def cat_arrays(arr1, arr2):
 
 def cat_matrices2D(mat1, mat2, axis=0):
     """ concatenates two matrices """
+    if not (type(mat1) == list) and not (type(mat2) == list):
+        return None
     cat = []
     if axis == 0:
         cat = cat_arrays(mat1, mat2)
         return cat
     else:
         for e in range(len(mat1)):
-           arr = cat_arrays(mat1[e], mat2[e])
-           cat.append(arr)
+            arr = cat_arrays(mat1[e], mat2[e])
+            cat.append(arr)
     return cat
