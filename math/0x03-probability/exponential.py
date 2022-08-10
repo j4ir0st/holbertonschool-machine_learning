@@ -30,13 +30,11 @@ class Exponential:
                 acum += elem
             self.lambtha = float(len(data) / acum)
 
-    def pmf(self, k):
-        """ Calculates the value of PMF for a given number of “successes” """
-        if type(k) is not int:
-            k = int(k)
-        if k < 0:
+    def pdf(self, x):
+        """ Calculates the value of PDF for a given number of “successes” """
+        if x < 0:
             return 0
-        p = (self.e**(-self.lambtha) * (self.lambtha ** k)) / Poisson.fact(k)
+        p = (self.e**(-self.lambtha * x) * (self.lambtha))
         return p
 
     def cdf(self, k):
