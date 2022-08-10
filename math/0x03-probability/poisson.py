@@ -20,3 +20,16 @@ class Poisson:
             for elem in data:
                 acum += elem
             self.lambtha = float(acum / len(data))
+
+
+    def pmf(self, k):
+        """ Calculates the value of PMF for a given number of “successes” """
+        if type(k) is not int:
+            k = int(k)
+            if k < 0:
+                return 0
+            fact = 1
+            for times in range(2, k + 1):
+                fact = fact * times
+            pmf = (self.e**(-self.lambtha) * (self.lambtha ** k)) / fact
+            return pmf
