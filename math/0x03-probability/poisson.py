@@ -4,6 +4,14 @@ Creating Poisson class
 """
 
 
+def fact(f):
+    """ Factorial function """
+    fact = 1
+    for times in range(2, f + 1):
+        fact = fact * times
+    return fact
+
+
 class Poisson:
     """ Represents a poisson distribution """
     def __init__(self, data=None, lambtha=1.):
@@ -28,8 +36,16 @@ class Poisson:
             k = int(k)
         if k < 0:
             return 0
-        fact = 1
-        for times in range(2, k + 1):
-            fact = fact * times
-        p = (self.e**(-self.lambtha) * (self.lambtha ** k)) / fact
+        p = (self.e**(-self.lambtha) * (self.lambtha ** k)) / Poisson.fact(k)
         return p
+
+    def cdf(self, k):
+        """ Calculates the value of CDF for a given number of “successes” """
+        if type(k) is not int:
+            k = int(k)
+        if k < 0:
+            return 0
+        cdf = 0
+        for a in range(k + 1):
+            cdf += (self.e ** (-self.lambtha) * (self.lambtha ** a)) / fact(a)
+        return cdf
