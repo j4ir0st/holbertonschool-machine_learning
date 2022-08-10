@@ -33,6 +33,16 @@ class Normal:
                 sum_dif2 += elem
             self.stddev = (sum_dif2 / len(data)) ** 0.5
 
+    def z_score(self, x):
+        """ Calculates the z-score of a given x-value """
+        z = (x - self.mean) / self.stddev
+        return z
+
+    def x_value(self, z):
+        """ Calculates the x-value of a given z-score """
+        x = (z * self.stddev) + self.mean
+        return x
+
     def pdf(self, x):
         """ Calculates the value of PDF for a given number of “successes” """
         if x < 0:
