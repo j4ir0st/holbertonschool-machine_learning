@@ -26,7 +26,7 @@ class Poisson:
         """ Calculates the value of PMF for a given number of “successes” """
         if type(k) is not int:
             k = int(k)
-            if k < 0:
+        if k < 0:
                 return 0
         fact = 1
         for times in range(2, k + 1):
