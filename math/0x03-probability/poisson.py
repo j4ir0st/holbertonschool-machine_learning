@@ -20,4 +20,3 @@ class Poisson:
             for elem in data:
                 acum += elem
             self.lambtha = float(acum / len(data))
-        
