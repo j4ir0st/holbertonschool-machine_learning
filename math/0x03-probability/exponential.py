@@ -37,13 +37,9 @@ class Exponential:
         p = (self.e**(-self.lambtha * x) * (self.lambtha))
         return p
 
-    def cdf(self, k):
+    def cdf(self, x):
         """ Calculates the value of CDF for a given number of “successes” """
-        if type(k) is not int:
-            k = int(k)
-        if k < 0:
+        if x < 0:
             return 0
-        cdf = 0
-        for a in range(k + 1):
-            cdf += (self.e ** (-self.lambtha) * (self.lambtha ** a)) / fact(a)
+        cdf = 1 - (self.e ** (-self.lambtha * x))
         return cdf
