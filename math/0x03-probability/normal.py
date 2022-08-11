@@ -16,6 +16,7 @@ class Normal:
     """ Represents a normal distribution """
     def __init__(self, data=None, mean=0., stddev=1.):
         self.e = 2.7182818285
+        self.pi = 3.1415926536
         if data is None:
             if stddev <= 0:
                 raise ValueError('stddev must be a positive value')
@@ -45,9 +46,9 @@ class Normal:
 
     def pdf(self, x):
         """ Calculates the value of PDF for a given number of “successes” """
-        if x < 0:
-            return 0
-        p = (self.e**(-self.lambtha * x) * (self.lambtha))
+        dev = (((2 * self.pi) ** 0.5) * self.stddev) ** (-1)
+        exp = (-(x - self.mean) ** 2) / (2 * (self.stddev ** 2))
+        p = dev * (self.e ** exp)
         return p
 
     def cdf(self, x):
