@@ -11,6 +11,13 @@ def fact(f):
         fact = fact * times
     return fact
 
+pi = 3.1415926536
+
+def erf(x):
+    """Error function"""
+    fact = x - (x ** 3) / 3 + (x ** 5) / 10 - (x ** 7) / 42 + (x ** 9) / 216
+    errf = (2 / (pi ** (0.5))) * fact
+    return errf
 
 class Normal:
     """ Represents a normal distribution """
@@ -53,7 +60,5 @@ class Normal:
 
     def cdf(self, x):
         """ Calculates the value of CDF for a given number of “successes” """
-        if x < 0:
-            return 0
-        cdf = 1 - (self.e ** (-self.lambtha * x))
+        cdf = 0.5 * (1 + erf((x - self.mean) / (self.stddev * (2 ** 0.5))))
         return cdf
