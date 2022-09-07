@@ -23,7 +23,7 @@ def cat_matrices2D(mat1, mat2, axis=0):
         cat = cat_arrays(mat1, mat2)
         return cat
     else:
-        if len(mat1[0]) != len(mat2):
+        if len(mat1) != len(mat2):
             return None
         for e in range(len(mat1)):
             arr = cat_arrays(mat1[e], mat2[e])
