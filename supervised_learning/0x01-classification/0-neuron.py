@@ -2,7 +2,6 @@
 """
 Creating a Neuron Class
 """
-import random
 import numpy as np
 
 
