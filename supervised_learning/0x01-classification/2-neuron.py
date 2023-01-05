@@ -21,7 +21,7 @@ class Neuron:
     def forward_prop(self, X):
         a = sigmoid(np.dot(self.__W, X) + self.__b)
         self.__A = a
-        return (a)
+        return (self.__A)
 
     @property
     def W(self):
@@ -38,4 +38,4 @@ class Neuron:
 
 def sigmoid(z):
     """ The sigmoid function """
-    return 1.0/(1.0+np.exp(-z))
+    return 1.0 / (1.0 + np.exp(-z))
