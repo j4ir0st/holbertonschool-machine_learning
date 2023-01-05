@@ -9,6 +9,7 @@ class Neuron:
     """ Neuron Class: nx is the number of input features to the neuron """
 
     def __init__(self, nx):
+        """ Initialization """
         if not (isinstance(nx, int)):
             raise TypeError('nx must be an integer')
         if (nx < 1):
@@ -19,20 +20,24 @@ class Neuron:
         self.__A = 0
 
     def forward_prop(self, X):
+        """ Forward propagation function """
         a = sigmoid(np.dot(self.__W, X) + self.__b)
         self.__A = a
         return (self.__A)
 
     @property
     def W(self):
+        """ Weigth """
         return (self.__W)
 
     @property
     def b(self):
+        """ Bias """
         return (self.__b)
 
     @property
     def A(self):
+        """ Activation output (prediction) """
         return (self.__A)
 
 
