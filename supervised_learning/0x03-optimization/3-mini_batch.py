@@ -36,12 +36,18 @@ using mini-batch gradient descent """
             sess.run(train_op, feed_dict={x: X_batch, y: Y_batch})
             step += 1
             if step % 100 == 0:
-                step_cost, step_accuracy = sess.run([loss, accuracy], feed_dict={x: X_batch, y: Y_batch})
+                step_cost, step_accuracy = sess.run([loss, accuracy],
+                                                    feed_dict={x: X_batch,
+                                                               y: Y_batch})
                 print(f"\tStep {step}:")
                 print(f"\t\tCost: {step_cost}")
                 print(f"\t\tAccuracy: {step_accuracy}")
-        train_cost, train_accuracy = sess.run([loss, accuracy], feed_dict={x: X_train, y: Y_train})
-        valid_cost, valid_accuracy = sess.run([loss, accuracy], feed_dict={x: X_valid, y: Y_valid})
+        train_cost, train_accuracy = sess.run([loss, accuracy],
+                                              feed_dict={x: X_train,
+                                                         y: Y_train})
+        valid_cost, valid_accuracy = sess.run([loss, accuracy],
+                                              feed_dict={x: X_valid,
+                                                         y: Y_valid})
         print(f"After {i+1} epochs:")
         print(f"\tTraining Cost: {train_cost}")
         print(f"\tTraining Accuracy: {train_accuracy}")
