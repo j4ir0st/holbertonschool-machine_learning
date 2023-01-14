@@ -11,6 +11,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
     """ trains a loaded neural network model
 using mini-batch gradient descent """
     with tf.Session() as sess:
+        m, n = X_train.shape
         # import meta graph and restore session
         saver = tf.train.import_meta_graph(load_path + '.meta')
         saver.restore(sess, load_path)
@@ -23,10 +24,23 @@ using mini-batch gradient descent """
         train_op = tf.get_collection("train_op")[0]
 
         # loop over epochs
-        for i in range(epochs):
+        for i in range(epochs + 1):
             # shuffle data
             X_train, Y_train = shuffle_data(X_train, Y_train)
             step = 0
+            train_cost, train_accuracy = sess.run([loss, accuracy],
+                                              feed_dict={x: X_train,
+                                                         y: Y_train})
+            valid_cost, valid_accuracy = sess.run([loss, accuracy],
+                                              feed_dict={x: X_valid,
+                                                         y: Y_valid})
+            print("After {} epochs:".format(i))
+            print("\tTraining Cost: {}".format(train_cost))
+            print("\tTraining Accuracy: {}".format(train_accuracy))
+            print("\tValidation Cost: {}".format(valid_cost))
+            print("\tValidation Accuracy: {}".format(valid_accuracy))
+            if i == epochs:
+                break
             # loop over the batches
             for j in range(0, m, batch_size):
                 # get X_batch and Y_batch from data
@@ -39,21 +53,9 @@ using mini-batch gradient descent """
                     step_cost, step_accuracy = sess.run([loss, accuracy],
                                                     feed_dict={x: X_batch,
                                                                y: Y_batch})
-                    print(f"\tStep {}:".format(step))
-                    print(f"\t\tCost: {}".format(step_cost))
-                    print(f"\t\tAccuracy: {}".format(step_accuracy))
-                    train_cost, train_accuracy = sess.run([loss, accuracy],
-                                              feed_dict={x: X_train,
-                                                         y: Y_train})
-                valid_cost, valid_accuracy = sess.run([loss, accuracy],
-                                              feed_dict={x: X_valid,
-                                                         y: Y_valid})
-                print(f"After {} epochs:".format(i+1))
-                print(f"\tTraining Cost: {}".format(train_cost))
-                print(f"\tTraining Accuracy: {}".format(train_accuracy))
-                print(f"\tValidation Cost: {}".format(valid_cost))
-                print(f"\tValidation Accuracy: {}".format(valid_accuracy))
-
+                    print("\tStep {}:".format(step))
+                    print("\t\tCost: {}".format(step_cost))
+                    print("\t\tAccuracy: {}".format(step_accuracy))
         # save session
         saver.save(sess, save_path)
         return save_path
