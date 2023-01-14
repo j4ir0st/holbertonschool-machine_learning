@@ -39,20 +39,20 @@ using mini-batch gradient descent """
                 step_cost, step_accuracy = sess.run([loss, accuracy],
                                                     feed_dict={x: X_batch,
                                                                y: Y_batch})
-                print(f"\tStep {step}:")
-                print(f"\t\tCost: {step_cost}")
-                print(f"\t\tAccuracy: {step_accuracy}")
+                print(f"\tStep {}:".format(step))
+                print(f"\t\tCost: {}".format(step_cost))
+                print(f"\t\tAccuracy: {}".format(step_accuracy))
         train_cost, train_accuracy = sess.run([loss, accuracy],
                                               feed_dict={x: X_train,
                                                          y: Y_train})
         valid_cost, valid_accuracy = sess.run([loss, accuracy],
                                               feed_dict={x: X_valid,
                                                          y: Y_valid})
-        print(f"After {i+1} epochs:")
-        print(f"\tTraining Cost: {train_cost}")
-        print(f"\tTraining Accuracy: {train_accuracy}")
-        print(f"\tValidation Cost: {valid_cost}")
-        print(f"\tValidation Accuracy: {valid_accuracy}")
+        print(f"After {} epochs:".format(i+1))
+        print(f"\tTraining Cost: {}".format(train_cost))
+        print(f"\tTraining Accuracy: {}".format(train_accuracy))
+        print(f"\tValidation Cost: {}".format(valid_cost))
+        print(f"\tValidation Accuracy: {}".format(valid_accuracy))
 
     # save session
     saver.save(sess, save_path)
