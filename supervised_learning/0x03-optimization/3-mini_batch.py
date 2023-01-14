@@ -10,8 +10,10 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                      batch_size=32, epochs=5,
                      load_path="/tmp/model.ckpt",
                      save_path="/tmp/model.ckpt"):
-    """ trains a loaded neural network model
-using mini-batch gradient descent """
+    """
+       trains a loaded neural network model
+       using mini-batch gradient descent
+    """
     with tf.Session() as sess:
         n = X_train.shape[0]
         batch = n // batch_size
@@ -31,8 +33,6 @@ using mini-batch gradient descent """
         # loop over epochs
         for i in range(epochs + 1):
             # shuffle data
-            X_train, Y_train = shuffle_data(X_train, Y_train)
-            step = 0
             train_cost = loss.eval({x: X_train, y: Y_train})
             train_accuracy = accuracy.eval({x: X_train, y: Y_train})
             valid_cost = loss.eval({x: X_valid, y: Y_valid})
@@ -44,6 +44,7 @@ using mini-batch gradient descent """
             print("\tValidation Accuracy: {}".format(valid_accuracy))
             if i == epochs:
                 break
+            X_train, Y_train = shuffle_data(X_train, Y_train)
             # loop over the batches
             for j in range(batch):
                 # get X_batch and Y_batch from data
