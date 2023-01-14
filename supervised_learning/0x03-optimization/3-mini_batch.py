@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """ Mini-Batch """
-
 import tensorflow.compat.v1 as tf
 
 
@@ -52,12 +51,11 @@ using mini-batch gradient descent """
                 Y_batch = Y_train[j*batch_size:(j+1)*batch_size]
                 # train model
                 sess.run(train_op, feed_dict={x: X_batch, y: Y_batch})
-                if (j+1) % 100 == 0:
+                if (j+1) % 100 == 0 and j != 0:
                     print("\tStep {}:".format(j+1))
                     step_cost = loss.eval({x: X_batch, y: Y_batch})
                     step_accuracy = accuracy.eval({x: X_batch, y: Y_batch})
                     print("\t\tCost: {}".format(step_cost))
                     print("\t\tAccuracy: {}".format(step_accuracy))
         # save session
-        saver.save(sess, save_path)
-        return save_path
+        return saver.save(sess, save_path)
