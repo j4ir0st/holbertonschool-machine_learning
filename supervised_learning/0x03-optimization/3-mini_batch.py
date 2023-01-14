@@ -9,11 +9,13 @@ shuffle_data = __import__('2-shuffle_data').shuffle_data
 
 def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                      batch_size=32, epochs=5,
-                     load_path="/tmp/model.ckpt", save_path="/tmp/model.ckpt"):
+                     load_path="/tmp/model.ckpt",
+                     save_path="/tmp/model.ckpt"):
     """ trains a loaded neural network model
 using mini-batch gradient descent """
     with tf.Session() as sess:
-        m, n = X_train.shape
+        n = X_train.shape[0]
+        batch = n // batch_size
         # import meta graph and restore session
         saver = tf.train.import_meta_graph(load_path + '.meta')
         saver.restore(sess, load_path)
@@ -25,17 +27,17 @@ using mini-batch gradient descent """
         loss = tf.get_collection("loss")[0]
         train_op = tf.get_collection("train_op")[0]
 
+        if batch % batch_size != 0:
+            batch += 1
         # loop over epochs
         for i in range(epochs + 1):
             # shuffle data
             X_train, Y_train = shuffle_data(X_train, Y_train)
             step = 0
-            train_cost, train_accuracy = sess.run([loss, accuracy],
-                                              feed_dict={x: X_train,
-                                                         y: Y_train})
-            valid_cost, valid_accuracy = sess.run([loss, accuracy],
-                                              feed_dict={x: X_valid,
-                                                         y: Y_valid})
+            train_cost = loss.eval({x: X_train, y: Y_train})
+            train_accuracy = accuracy.eval({x: X_train, y: Y_train})
+            valid_cost = loss.eval({x: X_valid, y: Y_valid})
+            valid_accuracy = accuracy.eval({x: X_valid, y: Y_valid})
             print("After {} epochs:".format(i))
             print("\tTraining Cost: {}".format(train_cost))
             print("\tTraining Accuracy: {}".format(train_accuracy))
@@ -44,18 +46,16 @@ using mini-batch gradient descent """
             if i == epochs:
                 break
             # loop over the batches
-            for j in range(0, m, batch_size):
+            for j in range(batch):
                 # get X_batch and Y_batch from data
-                X_batch = X_train[j:j+batch_size]
-                Y_batch = Y_train[j:j+batch_size]
+                X_batch = X_train[j*batch_size:(j+1)*batch_size]
+                Y_batch = Y_train[j*batch_size:(j+1)*batch_size]
                 # train model
                 sess.run(train_op, feed_dict={x: X_batch, y: Y_batch})
-                step += 1
-                if step % 100 == 0:
-                    step_cost, step_accuracy = sess.run([loss, accuracy],
-                                                    feed_dict={x: X_batch,
-                                                               y: Y_batch})
-                    print("\tStep {}:".format(step))
+                if (j+1) % 100 == 0:
+                    print("\tStep {}:".format(j+1))
+                    step_cost = loss.eval({x: X_batch, y: Y_batch})
+                    step_accuracy = accuracy.eval({x: X_batch, y: Y_batch})
                     print("\t\tCost: {}".format(step_cost))
                     print("\t\tAccuracy: {}".format(step_accuracy))
         # save session
