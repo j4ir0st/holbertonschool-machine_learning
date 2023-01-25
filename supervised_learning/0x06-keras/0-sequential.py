@@ -19,4 +19,5 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
                                      kernel_regularizer=reg))
         if i < len(layers) - 1:
             model.add(K.layers.Dropout(rate=(1 - keep_prob)))
+    model.compile(optimizer='adam')
     return model
