@@ -10,7 +10,7 @@ def train_model(network,
                 epochs,
                 validation_data=None,
                 early_stopping=False,
-                patience=0
+                patience=0,
                 verbose=True,
                 shuffle=False):
     """ trains a model using mini-batch gradient descent """
