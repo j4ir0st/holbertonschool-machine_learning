@@ -5,13 +5,11 @@ import tensorflow.keras as K
 
 def save_weights(network, filename, save_format='h5'):
     """ saves an entire model """
-    K.models.save_weights(model=network,
-                          filepath=filename,
-                          save_format=save_format)
+    network.save_weights(filepath=filename, save_format=save_format)
     return None
 
 
 def load_weights(network, filename):
     """ loads an entire model """
-    load_w = K.models.load_weights(filename, model=network)
+    load_w = network.load_weights(filename)
     return load_w
